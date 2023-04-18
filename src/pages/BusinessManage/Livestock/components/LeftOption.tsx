@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './LeftOption.less';
 
 interface propsInter {
-  propsChangeOption: (data: APIDevice.optionListData) => void
+  // propsChangeOption: (data: APIDevice.optionListData) => void
 }
 export default function LeftOption(props: propsInter) {
   const [optionData, setOptionData] = useState<any>([])
@@ -16,7 +16,7 @@ export default function LeftOption(props: propsInter) {
     
     setOptionData(res)
     setNowOptionData({ id: res[0].id })
-    props.propsChangeOption(res[0])
+    // props.propsChangeOption(res[0])
   }
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export default function LeftOption(props: propsInter) {
   // 选中企业发生变化时 do something
   const changeOption = (data: APIDevice.optionListData) => {
     setNowOptionData({ id: data.id })
-    props.propsChangeOption(data)
+    // props.propsChangeOption(data)
   }
 
   return (

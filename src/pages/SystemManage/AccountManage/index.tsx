@@ -41,7 +41,6 @@ const TableList: React.FC<unknown> = () => {
   // 关联企业枚举类的变化 do something
   const handleClientChange = (data: any) => {
     formRef.current?.setFieldValue('clientId', data)
-    console.log("下拉跨昂", data);
 
   }
 

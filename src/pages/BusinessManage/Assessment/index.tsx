@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react';
-import TableList from './components/TableList';
 import { ProCard } from '@ant-design/pro-components';
 import TableData from './components/TableData';
 

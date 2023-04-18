@@ -11,9 +11,7 @@ export default function LeftOption(props: propsInter) {
 
   // 请求得到企业列表
   const getOptionData = async () => {
-    const res = await queryCompanyList()
-    console.log(res);
-    
+    const res = await queryCompanyList()    
     setOptionData(res)
     setNowOptionData({ id: res[0].id })
     props.propsChangeOption(res[0])
