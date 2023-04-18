@@ -7,7 +7,7 @@ declare namespace APIDevice {
   interface deviceList {
     id: number,
     hoopsName: string,
-    deviceType: number
+    deviceType: boolean,
   }
 
   // 企业列表字段

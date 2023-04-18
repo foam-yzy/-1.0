@@ -29,6 +29,28 @@ export default defineConfig({
       component: './Home',
     },
     {
+      name: '业务管理',
+      path: '/BusinessManage',
+      // component: './Access',
+      routes: [
+        {
+          name: '牲畜档案',
+          path: '/BusinessManage/Livestock/index',
+          component: './BusinessManage/Livestock',
+        },
+        {
+          name: '设备管理',
+          path: '/BusinessManage/Device/index',
+          component: './BusinessManage/Device',
+        },
+        {
+          name: '监管考核',
+          path: '/BusinessManage/assessment/index',
+          component: './BusinessManage/Assessment',
+        },
+      ],
+    },
+    {
       name: '系统管理',
       path: '/SystemManage',
       // component: './Access',
@@ -43,23 +65,6 @@ export default defineConfig({
           path: '/SystemManage/roleManage/index',
           component: './SystemManage/RoleManage',
         }
-      ],
-    },
-    {
-      name: '业务管理',
-      path: '/BusinessManage',
-      // component: './Access',
-      routes: [
-        {
-          name: '监管考核',
-          path: '/BusinessManage/assessment/index',
-          component: './BusinessManage/Assessment',
-        },
-        {
-          name: '设备管理',
-          path: '/BusinessManage/Device/index',
-          component: './BusinessManage/Device',
-        },
       ],
     },
   ],

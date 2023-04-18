@@ -1,7 +1,7 @@
-import { ActionType, ProColumns, ProFormInstance, ProFormText } from '@ant-design/pro-components';
+import { ActionType, ProColumns, ProFormInstance, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { ProTable, PageContainer } from '@ant-design/pro-components';
-import { Button, message } from 'antd';
-import { useRef, useState } from 'react';
+import { Button, Radio, Select, Space, message } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import CreateForm from './CreateForm';
 import { deleteDataById, queryDataByDeviceId } from '@/services/demo/device/controller';
 
@@ -12,6 +12,17 @@ export default (props: propsInter) => {
   const actionRef = useRef<ActionType>();
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   const formRef = useRef<ProFormInstance>();
+
+  // 新增、修改判断是否选择摄像头
+  const [isCamera, setIsCamera] = useState<boolean>(false)
+  const chooseType = (data: number) => {
+    console.log("dklija", data);
+    setIsCamera(data == 1)
+  }
+
+  useEffect(() => {
+    actionRef.current?.reload()
+  }, [props.optionData.clientName])
 
   // 删除
   const handleRemove = async (id: number) => {
@@ -81,7 +92,7 @@ export default (props: propsInter) => {
     },
     {
       title: '牧场',
-      dataIndex: 'index',
+      dataIndex: 'd',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
@@ -93,7 +104,7 @@ export default (props: propsInter) => {
     },
     {
       title: '围栏',
-      dataIndex: 'index',
+      dataIndex: 'e',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
@@ -102,53 +113,75 @@ export default (props: propsInter) => {
       title: '设备类型',
       dataIndex: 'deviceType',
       valueType: 'text',
+      render: (value) => (value ? '摄像头' : '基站'),
+      // valueEnum: {
+      //   true: { text: '摄像头' },
+      //   false: { text: '基站' }
+      // }
+
+      renderFormItem: () => (
+        <Select
+          placeholder='请选择'
+          onChange={chooseType}
+          defaultValue={(isCamera) ? 1 : 0}
+          options={[
+            { value: 1, label: '摄像头' },
+            { value: 0, label: '基站' },
+          ]}
+        />
+      ),
     },
     {
       title: '设备名称',
-      dataIndex: 'index',
+      dataIndex: 'deviceName',
       valueType: 'text',
     },
     {
       title: '工作状态',
-      dataIndex: 'index',
+      dataIndex: 'workStatus',
       valueType: 'text',
       hideInForm: true,
+      valueEnum: {
+        true: { text: '启用' },
+        false: { text: '禁用' }
+      }
     },
     {
       title: '最近上报时间',
-      dataIndex: 'index',
-      valueType: 'text',
+      dataIndex: 'reportTime',
+      valueType: 'date',
       hideInSearch: true,
       hideInForm: true,
     },
     {
       title: '添加人',
-      dataIndex: 'index',
+      dataIndex: 'i',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
     },
     {
       title: '添加时间',
-      dataIndex: 'index',
+      dataIndex: 'g',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
     },
     {
       title: '状态',
-      dataIndex: 'index',
+      dataIndex: 'status',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
     },
     {
       title: 'MAC',
-      dataIndex: 'title',
+      dataIndex: 'k',
       copyable: true,
       ellipsis: true,
       hideInTable: true,
       hideInSearch: true,
+      hideInForm: isCamera,
       tip: '标题过长会自动收缩',
       formItemProps: {
         rules: [
@@ -160,38 +193,63 @@ export default (props: propsInter) => {
       },
     },
     {
+      title: '有无云台',
+      dataIndex: 'a',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: !isCamera,
+      hideInTable: true,
+    },
+    {
+      title: 'SIP认证ID',
+      dataIndex: 'b',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: !isCamera,
+      hideInTable: true,
+    },
+    {
+      title: 'SIP通道号',
+      dataIndex: 'c',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: !isCamera,
+      hideInTable: true,
+    },
+    {
       title: '操作',
       valueType: 'option',
-      key: 'option',
-      render: (_, record) => [
-        <a
-          style={{ color: '#21B47CFF' }}
-          onClick={() => {
-            updateDevice(record)
-            actionRef.current?.reload()
-          }}
-        >
-          修改
-        </a>,
-        <a
-          style={{ color: '#21B47CFF' }}
-          onClick={async () => {
-            handleRemove(record.id)
-            actionRef.current?.reload()
-          }}
-        >
-          删除
-        </a>,
-        <a
-          style={{ color: '#21B47CFF' }}
-          onClick={() => {
-            changeStatus(record)
-            actionRef.current?.reload()
-          }}
-        >
-          停用
-        </a>,
-      ],
+      render: (_, record) => (
+        <>
+          <a
+            style={{ color: '#21B47CFF' }}
+            onClick={() => {
+              updateDevice(record)
+              actionRef.current?.reload()
+            }}
+          >
+            修改
+          </a>,
+          <a
+            style={{ color: '#21B47CFF' }}
+            onClick={async () => {
+              handleRemove(record.id)
+              actionRef.current?.reload()
+            }}
+          >
+            删除
+          </a>,
+          <a
+            style={{ color: '#21B47CFF' }}
+            onClick={() => {
+              changeStatus(record)
+              actionRef.current?.reload()
+            }}
+          >
+            停用
+          </a>,
+        </>
+      )
     },
   ];
 
@@ -204,12 +262,11 @@ export default (props: propsInter) => {
     >
       <ProTable<APIDevice.deviceList>
         tableStyle={{ marginTop: 14 }}
-        style={{ position: 'relative' }}
         columns={columns}
         actionRef={actionRef}
         request={async (params) => {
           const { data, success } = await queryDataByDeviceId({
-            id: props.optionData.id,
+            clientId: props.optionData.id,
             // ...params,
             currentPage: params.current,
             pageSize: params.pageSize
@@ -267,6 +324,7 @@ export default (props: propsInter) => {
             onClick={() => {
               handleModalVisible(true)
               actionRef.current?.reload();
+
             }}
             type="primary"
             style={{ position: 'absolute', backgroundColor: '#21B47C', borderRadius: 1, color: '#fff', left: 21 }}

@@ -13,14 +13,14 @@ export async function queryCompanyList(
 // 根据企业id请求得到table的数据
 export async function queryDataByDeviceId(
   params: {
-    id: number,
+    clientId: number,
     currentPage?: number;
     pageSize?: number;
   },
 ) {
-  return request<any>('/api/v1/queryDataByDeviceId', {
-    method: 'GET',
-    params: {
+  return request<any>('/device/queryDevicePage', {
+    method: 'POST',
+    data: {
       ...params,
     },
   });
