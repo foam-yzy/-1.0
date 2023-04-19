@@ -123,6 +123,7 @@ export default (props: propsInter) => {
       message.success('新增成功，即将刷新');
       handleModalVisible(false)
       actionRef.current?.reload()
+      formRef.current?.resetFields()
       return true;
     } catch (error) {
       hide();
@@ -131,8 +132,10 @@ export default (props: propsInter) => {
     }
   };
 
+  const [upNameData, setUpNameData] = useState<{ hoopsName?: string, fenceName?: string }>()
   // 修改
   const updateDevice = (data: APIDevice.deviceList) => {
+    setUpNameData({ hoopsName: data.hoopsName, fenceName: data.fenceName })
     setIsAdd(false)
     getHoopsList()
     getFenceList(data.hoopsId)
@@ -147,16 +150,22 @@ export default (props: propsInter) => {
     const value = formRef.current?.getFieldsValue(true)
     const upApi = isCamera ? upDeviceByCamera : upDevice
     const hide = message.loading('正在修改');
+    const hoopsId = (upNameData?.hoopsName == data.hoopsName) ? value.hoopsId : Number(data.hoopsName)
+    const fenceId = (upNameData?.fenceName == data.fenceName) ? value.fenceId : Number(data.fenceName)
     if (!data) return true;
     try {
       await upApi({
         ...value,
-        clientId: props.optionData.id
+        clientId: props.optionData.id,
+        hoopsId: hoopsId,
+        fenceId: fenceId,
       });
       hide();
       message.success('修改成功，即将刷新');
       handleModalVisible(false)
       actionRef.current?.reload()
+      formRef.current?.resetFields()
+      setIsCamera(false)
       return true;
     } catch (error) {
       hide();
@@ -420,7 +429,7 @@ export default (props: propsInter) => {
               actionRef.current?.reload()
             }}
           >
-            停用
+            {record.deviceStatus ? '停用' : '启用'}
           </a>
         </>
       )
@@ -518,7 +527,6 @@ export default (props: propsInter) => {
         <ProTable<APIDevice.deviceList, APIDevice.deviceList>
           onSubmit={(value) => {
             isAdd ? addSubmit(value) : updateSubmit(value)
-            formRef.current?.resetFields()
           }}
           onReset={() => {
             handleModalVisible(false)
