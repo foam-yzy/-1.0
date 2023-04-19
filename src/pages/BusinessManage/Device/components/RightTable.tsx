@@ -197,13 +197,6 @@ export default (props: propsInter) => {
         )
       },
     },
-    // {
-    //   title: '牧场',
-    //   dataIndex: 'd',
-    //   valueType: 'text',
-    //   hideInSearch: true,
-    //   hideInForm: true,
-    // },
     {
       title: '圈舍',
       dataIndex: 'hoopsName',
@@ -442,8 +435,11 @@ export default (props: propsInter) => {
         title: '',
         breadcrumb: {},
       }}
+      style={{padding: 0}}
+      childrenContentStyle={{ padding: 0}}
     >
       <ProTable<APIDevice.deviceList>
+        bordered
         tableStyle={{ marginTop: 14 }}
         columns={columns}
         actionRef={actionRef}
@@ -466,8 +462,11 @@ export default (props: propsInter) => {
         }}
         rowKey="id"
         search={{
-          style: { borderBottom: '1px solid #F0F0F0FF' },
-          labelWidth: 'auto',
+          style: { borderBottom: '1px solid #F0F0F0FF', marginLeft: '-20px '},
+          labelWidth: 65,
+          span: 6,
+          layout: "horizontal",
+          submitterColSpanProps: { span: 80 },
           optionRender: ({ form }) => [
             <Button
               key="searchText"
@@ -514,7 +513,7 @@ export default (props: propsInter) => {
               setIsAdd(true)
             }}
             type="primary"
-            style={{ position: 'absolute', backgroundColor: '#21B47C', borderRadius: 1, color: '#fff', left: 21 }}
+            style={{ position: 'absolute', backgroundColor: '#21B47C', borderRadius: 1, color: '#fff', left: 25 }}
           >
             新增设备
           </Button>,

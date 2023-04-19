@@ -187,6 +187,7 @@ export default (props: propsInter) => {
 
     return (
         <ProTable<APIAssessment.AssessmentInfo>
+            bordered
             columns={columns}
             actionRef={actionRef}
             formRef={formRef}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import LeftOption from './components/LeftOption'
 import RightTable from './components/RightTable'
-import styles from './index.less'
+import './index.less'
 
 export default function index() {
 
@@ -12,11 +12,11 @@ export default function index() {
     }
 
     return (
-        <div className={styles.mainBody}>
-            <div className={styles.leftOption}>
+        <div className="mainDeviceBody">
+            <div className="leftOption">
                 <LeftOption propsChangeOption={propsChangeOption} />
             </div>
-            <div className={styles.rightTable}>
+            <div className="rightTableBody">
                 <RightTable optionData={optionData} />
             </div>
         </div>

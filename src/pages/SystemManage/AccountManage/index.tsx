@@ -344,6 +344,7 @@ const TableList: React.FC<unknown> = () => {
       }}
     >
       <ProTable<APIAccount.AccountInfo>
+        bordered 
         tableStyle={{ marginTop: 41 }}
         style={{ position: 'relative' }}
         actionRef={actionRef}
