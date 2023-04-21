@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { ProCard } from '@ant-design/pro-components';
 import TableData from './components/TableData';
+import './index.less'
 
 export default () => {
     const [tab, setTab] = useState('tab1');
@@ -13,7 +14,6 @@ export default () => {
     return (
         <div>
             <ProCard
-                
                 tabs={{
                     activeKey: tab,
                     destroyInactiveTabPane: true,

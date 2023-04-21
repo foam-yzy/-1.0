@@ -1,9 +1,9 @@
-import { queryCompanyList } from '@/services/demo/device/controller'
 import React, { useEffect, useState } from 'react'
 import './LeftOption.less';
+import { queryClientList } from '@/services/demo/livestock/controller';
 
 interface propsInter {
-  // propsChangeOption: (data: APIDevice.optionListData) => void
+  propsChangeOption: (data: APILivestock.optionListData) => void
 }
 export default function LeftOption(props: propsInter) {
   const [optionData, setOptionData] = useState<any>([])
@@ -11,12 +11,10 @@ export default function LeftOption(props: propsInter) {
 
   // 请求得到企业列表
   const getOptionData = async () => {
-    const res = await queryCompanyList()
-    console.log(res);
-    
+    const res = await queryClientList()
     setOptionData(res)
     setNowOptionData({ id: res[0].id })
-    // props.propsChangeOption(res[0])
+    props.propsChangeOption(res[0])
   }
 
   useEffect(() => {
@@ -24,15 +22,15 @@ export default function LeftOption(props: propsInter) {
   }, [])
 
   // 选中企业发生变化时 do something
-  const changeOption = (data: APIDevice.optionListData) => {
+  const changeOption = (data: APILivestock.optionListData) => {
     setNowOptionData({ id: data.id })
-    // props.propsChangeOption(data)
+    props.propsChangeOption(data)
   }
 
   return (
     <div>
       <div className='spanAllText'>全部</div>
-      {optionData.map((item: APIDevice.optionListData) => {
+      {optionData.map((item: APILivestock.optionListData) => {
         //当点击事件触发时，赋className
         const nowClassName = (item.id === nowOptionData?.id) ? 'active' : ''
         return (
