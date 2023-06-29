@@ -18,7 +18,6 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
       open={modalVisible}
       onCancel={() => onCancel()}
       footer={null}
-    // style={{borderRadius: 0}}
     >
       <Divider style={{ width: 452, marginLeft: -24 }} />
       {props.children}

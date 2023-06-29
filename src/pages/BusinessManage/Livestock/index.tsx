@@ -29,8 +29,8 @@ export default function index() {
           <RightTabs chooseTab={chooseTab} />
         </div>
         <div className="rightBody">
-          {nowTab == 'tab1' ? <RightTable /> : null}
-          {nowTab == 'tab2' ? <ChangeRecord /> : null}
+          {nowTab == 'tab1' ? <RightTable nowOption={nowOption} /> : null}
+          {nowTab == 'tab2' ? <ChangeRecord nowOptionData={nowOption} /> : null}
         </div>
       </div>
     </div>

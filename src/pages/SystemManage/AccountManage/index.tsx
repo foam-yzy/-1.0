@@ -88,7 +88,7 @@ const TableList: React.FC<unknown> = () => {
     try {
       await getApi({
         ...data,
-        clientIds:fields.clientId,
+        clientIds: fields.clientId,
         roleId: Number(fields.roleId),
       });
       hide();
@@ -284,7 +284,6 @@ const TableList: React.FC<unknown> = () => {
           allowClear
           showSearch
           placeholder="请选择关联企业"
-          // defaultValue={[1, 18]}
           onChange={handleClientChange}
           options={clientEnums}
         />
@@ -326,8 +325,8 @@ const TableList: React.FC<unknown> = () => {
 
           <Divider type="vertical" />
           <a onClick={() => {
-            handleChangeStatus({ id: record.id, status: !record.status }),
-              actionRef.current?.reloadAndRest?.()
+            handleChangeStatus({ id: record.id, status: !record.status })
+            actionRef.current?.reloadAndRest?.()
           }}
             style={{ color: '#21B47C' }}
           >{record.status ? '停用' : '启用'}</a>
@@ -344,7 +343,7 @@ const TableList: React.FC<unknown> = () => {
       }}
     >
       <ProTable<APIAccount.AccountInfo>
-        bordered 
+        bordered
         tableStyle={{ marginTop: 41 }}
         style={{ position: 'relative' }}
         actionRef={actionRef}
@@ -416,7 +415,7 @@ const TableList: React.FC<unknown> = () => {
       >
         <ProTable<APIAccount.AccountInfo, APIAccount.AccountInfo>
           onSubmit={async (value) => {
-            console.log("编辑"+value)
+            console.log("编辑" + value)
             const success = await handleAdd(value);
             if (success) {
               handleModalVisible(false);
@@ -424,7 +423,7 @@ const TableList: React.FC<unknown> = () => {
               if (actionRef.current) {
                 actionRef.current.reload();
               }
-              
+
             }
           }}
           formRef={formRef}
@@ -432,13 +431,8 @@ const TableList: React.FC<unknown> = () => {
             layout: 'horizontal',
             style: { borderRadius: 0 },
             labelCol: {
-              // xs: {span: 24},
               sm: { span: 5 }
             },
-            // wrapperCol: {
-            //   xs: {span: 28},
-            //   sm: {span: 25}
-            // },
             submitter: {
               submitButtonProps: { style: { backgroundColor: '#21B47C' } },
               resetButtonProps: { style: { marginLeft: 230 } }

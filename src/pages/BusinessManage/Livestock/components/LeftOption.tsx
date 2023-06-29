@@ -9,7 +9,7 @@ export default function LeftOption(props: propsInter) {
   const [optionData, setOptionData] = useState<any>([])
   const [nowOptionData, setNowOptionData] = useState<{ id: number }>()
 
-  // 请求得到企业列表
+  // 请求得到客户列表
   const getOptionData = async () => {
     const res = await queryClientList()
     setOptionData(res)
@@ -21,7 +21,7 @@ export default function LeftOption(props: propsInter) {
     getOptionData()
   }, [])
 
-  // 选中企业发生变化时 do something
+  // 选中客户发生变化时 do something
   const changeOption = (data: APILivestock.optionListData) => {
     setNowOptionData({ id: data.id })
     props.propsChangeOption(data)

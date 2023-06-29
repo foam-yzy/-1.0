@@ -13,7 +13,7 @@ export default defineConfig({
   },
   proxy: {
     '/api': {
-      target: 'http://10.8.20.120:8098',
+      target: 'http://10.8.21.120:8098',
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },
@@ -34,9 +34,24 @@ export default defineConfig({
       // component: './Access',
       routes: [
         {
+          name: '图纸选点',
+          path: '/BusinessManage/Client/index',
+          component: './BusinessManage/Client',
+        },
+        {
           name: '牲畜档案',
           path: '/BusinessManage/Livestock/index',
           component: './BusinessManage/Livestock',
+        },
+        {
+          // name: '牲畜',
+          path: '/BusinessManage/Livestock/components/CheckHoops',
+          component: './BusinessManage/Livestock/components/CheckHoops',
+        },
+        {
+          // name: '抵押解押',
+          path: '/BusinessManage/Livestock/components/MortgageAndRelease',
+          component: './BusinessManage/Livestock/components/MortgageAndRelease',
         },
         {
           name: '设备管理',

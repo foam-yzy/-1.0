@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Divider, Modal } from 'antd';
 import React, { PropsWithChildren } from 'react';
 
 interface CreateFormProps {
@@ -18,6 +18,7 @@ const CreateForm: React.FC<PropsWithChildren<CreateFormProps>> = (props) => {
       onCancel={() => onCancel()}
       footer={null}
     >
+      <Divider />
       {props.children}
     </Modal>
   );

@@ -1,7 +1,7 @@
 import { request } from '@umijs/max';
 
 
-// 请求得到企业信息列表
+// 请求得到客户信息列表
 export async function queryClientList() {
   return request('/account-client/queryClientIdAndClientName', {
     method: 'GET',
@@ -10,121 +10,146 @@ export async function queryClientList() {
 
 // 获取圈舍列表
 export async function queryHoopsList(
-  params: {
-    clientId: number
-  },
+  params: { clientId?: number },
 ) {
-  return request('/device/queryHoopsIdAndName', {
+  return request('/livestock/queryHoopsIdAndName', {
     method: 'GET',
-    params: {
-      ...params,
-    },
+    params: params,
   });
 }
 
 // 获取围栏列表
-export async function queryFenceByHoops(
-  params: { hoopsId: number }
+export async function queryFenceList(
+  params: { hoopsId?: number },
 ) {
-  return request('/device/queryFenceIdAndName', {
+  return request('/livestock/queryFenceIdAndName', {
     method: 'GET',
-    params: params
+    params: params,
   });
 }
 
-// 根据企业id请求得到table的数据
-export async function queryDataByDeviceId(
-  params: {
-    clientId: number,
-    currentPage?: number,
-    pageSize?: number,
-    hoopsName?: string,
-    deviceType?: boolean,
-    deviceName?: string,
-    workStatus?: boolean,
-  },
+// 获取牲畜类型
+export async function queryLivestockType() {
+  return request('/livestock/getAllMenu', {
+    method: 'GET',
+  });
+}
+
+// 根据客户id请求得到table的数据
+export async function queryHoopsByClientId(
+  params: APILivestock.livestockList | APILivestock.pageHoops | { clientId: number }
 ) {
-  return request<any>('/device/queryDevicePage', {
+  return request('/livestock/LivesPage', {
     method: 'POST',
     data: {
-      ...params,
+      ...params
     },
   });
 }
 
-// table根据id删除
-export async function deleteDataById(
+// 牲畜出栏
+export async function outLivestockByHoopsId(
   params: {
-    id: number
-  },
+    hoopsId?: number,
+    columnType: boolean,
+  }
 ) {
-  return request<any>('/device/deleteDevice', {
+  return request('/livestock/outLivestock', {
     method: 'POST',
-    data: {
-      ...params,
-    },
+    data: params
   });
 }
 
-// 更新状态
-export async function changeStatusById(
+// 牲畜出栏
+export async function changeLivestockById(
   params: {
     id?: number,
-    deviceStatus: boolean
+    hoopsId: number,
+    fenceId: number,
+  }
+) {
+  return request('/livestock/changeLivestock', {
+    method: 'POST',
+    data: params
+  })
+}
+
+// 牲畜换标
+export async function swapLivestockById(
+  params: {
+    id?: number,
+    intelligentEarNumber: string,
+    earTagsReason: boolean,
+  }
+) {
+  return request('/livestock/swapLivestock', {
+    method: 'POST',
+    data: params
+  })
+}
+
+// 牲畜根据id删除
+export async function deleteLivestockById(
+  params: {
+    id?: number
   },
 ) {
-  return request<any>('/device/updateDeviceStatus', {
+  return request<any>('/livestock/deleteLivestock', {
     method: 'POST',
-    data: {
-      ...params,
-    },
+    data: params,
   });
 }
 
-// 新增-摄像头
-export async function addDeviceByCamera(
-  params: APIDevice.addDeviceByCameraInter,
+// 牲畜新增
+export async function insertLivestock(
+  params: APILivestock.livestockList
 ) {
-  return request('/device/addCamera', {
+  return request('/livestock/addLives', {
     method: 'POST',
-    data: {
-      ...params,
-    },
-  });
+    data: params,
+  })
 }
 
-// 新增-基站
-export async function addDevice(
-  params: APIDevice.addDeviceInter,
-) {
-  return request('/device/addBaseStation', {
-    method: 'POST',
-    data: {
-      ...params,
-    },
-  });
+// 下载档案模板
+export async function downloadLivestockAPI() {
+  return request('/livestock/downloadLivestock', {
+    method: 'GET',
+    responseType: 'blob'
+  })
 }
 
-// 修改-摄像头
-export async function upDeviceByCamera(
-  params: APIDevice.addDeviceByCameraInter,
-) {
-  return request('/device/updateCamera', {
-    method: 'POST',
-    data: {
-      ...params,
-    },
-  });
+// 下载参保模板
+export async function downloadInsuredAPI() {
+  return request('/livestock/downloadInsured', {
+    method: 'GET',
+    responseType: 'blob'
+  })
 }
 
-// 修改-基站
-export async function upDevice(
-  params: APIDevice.addDeviceInter,
+// 批量导入档案模板
+export async function exportLivestockAPI(
+  params: {
+    client_id?: number,
+    File: any
+  }
 ) {
-  return request('/device/updateBaseStation', {
+  return request('/livestock/importLivestock', {
+    method: 'POST',
+    data: params,
+    // headers: {
+    //   'Content-Type': "multipart/form-data",
+    // },
+  })
+}
+
+// 请求得到变动记录table的数据
+export async function queryOrderList(
+  params: APILivestock.changeRecordList
+) {
+  return request('/livestock/change/queryOrderList', {
     method: 'POST',
     data: {
-      ...params,
+      ...params
     },
   });
 }
